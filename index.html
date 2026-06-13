@@ -19,9 +19,9 @@
   --bg-bottom:   #fbe3ea;   /* 背景（下）パステルピンク */
   --bg-party-1:  #ffd9e6;   /* 発表後の華やかな背景１ */
   --bg-party-2:  #fff3cf;   /* 発表後の華やかな背景２（ゴールド寄り） */
-  --balloon:     #f7a8c4;   /* 風船の色（パステルピンク） */
-  --balloon-hi:  #ffd3e2;   /* 風船のツヤ（明るいピンク） */
-  --balloon-lo:  #ec7fa6;   /* 風船の影（濃いピンク） */
+  /* 風船は「パステル虹色」です。色の帯を変えたい場合は下の .balloon の
+     linear-gradient（虹色の帯）を編集してください。性別が分からない中立色です。 */
+  --balloon-lo:  #b9a6dd;   /* 風船の結び目・ひもの色（やわらかい紫） */
   --pink-deep:   #d6457f;   /* 文字・アクセントの濃いピンク */
   --pink-soft:   #f48fb1;   /* やわらかいピンク */
   --gold:        #d9b25a;   /* ゴールド */
@@ -111,11 +111,20 @@ body.party{
 
 .balloon{
   width:min(58vw,230px); height:min(70vw,280px);
+  /* ↓ パステル虹色の帯。色や順番を変えると風船の見た目が変わります */
   background:
-    radial-gradient(circle at 34% 28%, var(--balloon-hi) 0%, var(--balloon) 46%, var(--balloon-lo) 100%);
+    radial-gradient(circle at 34% 26%, rgba(255,255,255,.65) 0%, rgba(255,255,255,0) 40%),
+    linear-gradient(140deg,
+      #ff9aa2 0%,    /* 赤 */
+      #ffb38a 18%,   /* オレンジ */
+      #ffe39a 36%,   /* 黄 */
+      #b8e9c5 54%,   /* 緑 */
+      #a7d3f5 72%,   /* 青 */
+      #c4b1ec 100%   /* 紫 */
+    );
   border-radius:50% 50% 50% 50% / 46% 46% 54% 54%;
   position:relative;
-  box-shadow:inset -10px -16px 26px rgba(0,0,0,.10), 0 18px 30px rgba(214,69,127,.20);
+  box-shadow:inset -10px -16px 26px rgba(0,0,0,.12), 0 18px 30px rgba(120,90,160,.28);
 }
 /* ツヤ */
 .balloon::before{
@@ -132,10 +141,14 @@ body.party{
 /* ひも */
 .string{
   position:absolute; left:50%; top:100%; width:2px; height:90px;
-  background:linear-gradient(var(--balloon-lo),rgba(236,127,166,.2));
+  background:linear-gradient(var(--balloon-lo),rgba(185,166,221,.2));
   transform:translateX(-50%);
 }
-.balloon-tip{ position:absolute; top:42%; left:50%; transform:translate(-50%,-50%); font-size:clamp(34px,11vw,52px); }
+.balloon-tip{
+  position:absolute; top:42%; left:50%; transform:translate(-50%,-50%);
+  font-size:clamp(40px,13vw,64px); font-weight:900; color:#fff;
+  text-shadow:0 3px 8px rgba(0,0,0,.18);   /* 性別が分からない「?」マーク */
+}
 
 @keyframes floaty{
   0%,100%{ transform:translateY(0) rotate(-1.5deg); }
@@ -287,12 +300,12 @@ body.party{
   <div class="open-head">
     <div class="open-title">おじいちゃん、おばあちゃんへ</div>
     <div class="open-sub">赤ちゃんからメッセージがあります</div>
-    <div class="open-deco">♡</div>
+    <div class="open-deco">✦</div>
   </div>
 
   <!-- 風船（タップで開始） -->
   <div class="balloon-wrap" id="balloon" role="button" tabindex="0" aria-label="風船をタップ">
-    <div class="balloon"><span class="balloon-tip">💗</span></div>
+    <div class="balloon"><span class="balloon-tip">?</span></div>
     <div class="string"></div>
   </div>
 
